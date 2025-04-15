@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "7c5e8320-3fde-4b22-9e48-979857c84ddb",
+		"name": "go-eth-auction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25021865"
+	},
+	"item": [
+		{
+			"name": "/greeting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/greeting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"greeting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/view",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/auction/view?auctionName=test001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"view"
+					],
+					"query": [
+						{
+							"key": "auctionName",
+							"value": "test001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/auction/logs?auctionName=camera-auction-texas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "auctionName",
+							"value": "camera-auction-texas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/blockchain/view",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/blockchain/view?auctionName=camera-auction-texas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"blockchain",
+						"view"
+					],
+					"query": [
+						{
+							"key": "auctionName",
+							"value": "camera-auction-texas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"camera-auction-texas\",\n    \"startDate\" : {{$timestamp}},\n    \"endDate\" : 1748339892\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/auction/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/product/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"auctionName\" : \"camera-auction-texas\",\n    \"code\" : 1000,\n    \"startingPrice\" : 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/auction/product/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/bidder/authorize",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"auctionName\" : \"camera-auction-texas\",\n    \"name\" : \"robert\",\n    \"address\" : \"0xc0ffee254729296a45a3885639AC7E10F9d54979\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/auction/bidder/authorize",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"bidder",
+						"authorize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auction/bid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"auctionName\" : \"camera-auction-texas\",\n    \"amount\" : 100000,\n    \"address\" : \"0xc0ffee254729296a45a3885639AC7E10F9d54979\",\n    \"productCode\" : 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/auction/bid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"auction",
+						"bid"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
