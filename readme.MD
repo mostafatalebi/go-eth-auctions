@@ -1,6 +1,9 @@
 ### Multi Product Auction in GO
-This repository includes a study-level code-base for interacting with
-ethereum deployed smart contract. 
+
+Uses go-ethereum set of packages to interact with a sibling smart contract providing
+multi product auction (link in below).
+
+It includes loading contract abi, singing TXs and calling methods as well as sending wei.
 
 Do not use it for production.
 

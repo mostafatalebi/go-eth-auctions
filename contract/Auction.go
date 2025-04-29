@@ -31,7 +31,7 @@ var (
 
 // AuctionMetaData contains all meta data concerning the Auction contract.
 var AuctionMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BidPlaced\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedBuyers\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"toBeBuyer\",\"type\":\"address\"}],\"name\":\"authorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"}],\"name\":\"bid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"currentBids\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"put\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"bidderAddress\",\"type\":\"address\"}],\"name\":\"getCurrentBids\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"}],\"name\":\"getHighestBid\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getWinners\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liveProductsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startingBidPrice\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isRemove\",\"type\":\"bool\"}],\"name\":\"product\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"productsKeys\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"productsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"code\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startingPrice\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"exists\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"setAuctionTiming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"toBeBuyer\",\"type\":\"address\"}],\"name\":\"unauthorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"enumActivationType\",\"name\":\"_startType\",\"type\":\"uint8\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"ErrAuctionCannotBeStarted\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionClosed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionIsManual\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionIsTemporal\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionNotActive\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionNotStarted\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionNotYetClosed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrAuctionStarted\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrBadProductCode\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrBidCannotBeLowerThanPrevious\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrBidTooLow\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrBidderNotFound\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrDuplicateBidder\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrDurTooShort\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrForbidden\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrOutOfBalance\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrProductNotFound\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrTooManyProducts\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ErrWithdrawFailed\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BidPlaced\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"allowedBuyers\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"toBeBuyer\",\"type\":\"address\"}],\"name\":\"authorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"}],\"name\":\"bid\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"}],\"name\":\"bidAs\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"closeAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"currentBids\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"put\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"bidderAddress\",\"type\":\"address\"}],\"name\":\"getCurrentBids\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"}],\"name\":\"getHighestBid\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMyBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getWinners\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"liveProductsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"productCode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startingBidPrice\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isRemove\",\"type\":\"bool\"}],\"name\":\"product\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"productsKeys\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"productsMap\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"code\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startingPrice\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"exists\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"setAuctionTiming\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startAuction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"toBeBuyer\",\"type\":\"address\"}],\"name\":\"unauthorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"bidder\",\"type\":\"address\"}],\"name\":\"withdrawAs\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
 }
 
 // AuctionABI is the input ABI used to generate the binding from.
@@ -328,6 +328,37 @@ func (_Auction *AuctionCallerSession) GetHighestBid(productCode *big.Int) (*big.
 	return _Auction.Contract.GetHighestBid(&_Auction.CallOpts, productCode)
 }
 
+// GetMyBalance is a free data retrieval call binding the contract method 0x4c738909.
+//
+// Solidity: function getMyBalance() view returns(uint256)
+func (_Auction *AuctionCaller) GetMyBalance(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Auction.contract.Call(opts, &out, "getMyBalance")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// GetMyBalance is a free data retrieval call binding the contract method 0x4c738909.
+//
+// Solidity: function getMyBalance() view returns(uint256)
+func (_Auction *AuctionSession) GetMyBalance() (*big.Int, error) {
+	return _Auction.Contract.GetMyBalance(&_Auction.CallOpts)
+}
+
+// GetMyBalance is a free data retrieval call binding the contract method 0x4c738909.
+//
+// Solidity: function getMyBalance() view returns(uint256)
+func (_Auction *AuctionCallerSession) GetMyBalance() (*big.Int, error) {
+	return _Auction.Contract.GetMyBalance(&_Auction.CallOpts)
+}
+
 // GetWinners is a free data retrieval call binding the contract method 0xdf15c37e.
 //
 // Solidity: function getWinners() view returns(string)
@@ -544,6 +575,48 @@ func (_Auction *AuctionTransactorSession) Bid(productCode *big.Int) (*types.Tran
 	return _Auction.Contract.Bid(&_Auction.TransactOpts, productCode)
 }
 
+// BidAs is a paid mutator transaction binding the contract method 0x0d1f55e3.
+//
+// Solidity: function bidAs(uint256 productCode, address bidder) payable returns()
+func (_Auction *AuctionTransactor) BidAs(opts *bind.TransactOpts, productCode *big.Int, bidder common.Address) (*types.Transaction, error) {
+	return _Auction.contract.Transact(opts, "bidAs", productCode, bidder)
+}
+
+// BidAs is a paid mutator transaction binding the contract method 0x0d1f55e3.
+//
+// Solidity: function bidAs(uint256 productCode, address bidder) payable returns()
+func (_Auction *AuctionSession) BidAs(productCode *big.Int, bidder common.Address) (*types.Transaction, error) {
+	return _Auction.Contract.BidAs(&_Auction.TransactOpts, productCode, bidder)
+}
+
+// BidAs is a paid mutator transaction binding the contract method 0x0d1f55e3.
+//
+// Solidity: function bidAs(uint256 productCode, address bidder) payable returns()
+func (_Auction *AuctionTransactorSession) BidAs(productCode *big.Int, bidder common.Address) (*types.Transaction, error) {
+	return _Auction.Contract.BidAs(&_Auction.TransactOpts, productCode, bidder)
+}
+
+// CloseAuction is a paid mutator transaction binding the contract method 0x378252f2.
+//
+// Solidity: function closeAuction() returns()
+func (_Auction *AuctionTransactor) CloseAuction(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Auction.contract.Transact(opts, "closeAuction")
+}
+
+// CloseAuction is a paid mutator transaction binding the contract method 0x378252f2.
+//
+// Solidity: function closeAuction() returns()
+func (_Auction *AuctionSession) CloseAuction() (*types.Transaction, error) {
+	return _Auction.Contract.CloseAuction(&_Auction.TransactOpts)
+}
+
+// CloseAuction is a paid mutator transaction binding the contract method 0x378252f2.
+//
+// Solidity: function closeAuction() returns()
+func (_Auction *AuctionTransactorSession) CloseAuction() (*types.Transaction, error) {
+	return _Auction.Contract.CloseAuction(&_Auction.TransactOpts)
+}
+
 // Product is a paid mutator transaction binding the contract method 0x0471b94b.
 //
 // Solidity: function product(uint256 productCode, uint256 startingBidPrice, bool isRemove) returns()
@@ -586,6 +659,27 @@ func (_Auction *AuctionTransactorSession) SetAuctionTiming(start *big.Int, end *
 	return _Auction.Contract.SetAuctionTiming(&_Auction.TransactOpts, start, end)
 }
 
+// StartAuction is a paid mutator transaction binding the contract method 0x6b64c769.
+//
+// Solidity: function startAuction() returns()
+func (_Auction *AuctionTransactor) StartAuction(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Auction.contract.Transact(opts, "startAuction")
+}
+
+// StartAuction is a paid mutator transaction binding the contract method 0x6b64c769.
+//
+// Solidity: function startAuction() returns()
+func (_Auction *AuctionSession) StartAuction() (*types.Transaction, error) {
+	return _Auction.Contract.StartAuction(&_Auction.TransactOpts)
+}
+
+// StartAuction is a paid mutator transaction binding the contract method 0x6b64c769.
+//
+// Solidity: function startAuction() returns()
+func (_Auction *AuctionTransactorSession) StartAuction() (*types.Transaction, error) {
+	return _Auction.Contract.StartAuction(&_Auction.TransactOpts)
+}
+
 // Unauthorize is a paid mutator transaction binding the contract method 0xf0b37c04.
 //
 // Solidity: function unauthorize(address toBeBuyer) returns()
@@ -626,6 +720,27 @@ func (_Auction *AuctionSession) Withdraw() (*types.Transaction, error) {
 // Solidity: function withdraw() returns()
 func (_Auction *AuctionTransactorSession) Withdraw() (*types.Transaction, error) {
 	return _Auction.Contract.Withdraw(&_Auction.TransactOpts)
+}
+
+// WithdrawAs is a paid mutator transaction binding the contract method 0x954d4fbd.
+//
+// Solidity: function withdrawAs(address bidder) returns()
+func (_Auction *AuctionTransactor) WithdrawAs(opts *bind.TransactOpts, bidder common.Address) (*types.Transaction, error) {
+	return _Auction.contract.Transact(opts, "withdrawAs", bidder)
+}
+
+// WithdrawAs is a paid mutator transaction binding the contract method 0x954d4fbd.
+//
+// Solidity: function withdrawAs(address bidder) returns()
+func (_Auction *AuctionSession) WithdrawAs(bidder common.Address) (*types.Transaction, error) {
+	return _Auction.Contract.WithdrawAs(&_Auction.TransactOpts, bidder)
+}
+
+// WithdrawAs is a paid mutator transaction binding the contract method 0x954d4fbd.
+//
+// Solidity: function withdrawAs(address bidder) returns()
+func (_Auction *AuctionTransactorSession) WithdrawAs(bidder common.Address) (*types.Transaction, error) {
+	return _Auction.Contract.WithdrawAs(&_Auction.TransactOpts, bidder)
 }
 
 // Receive is a paid mutator transaction binding the contract receive function.

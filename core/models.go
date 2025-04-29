@@ -114,6 +114,15 @@ func (ap *ProductModel) Copy() *ProductModel {
 	return pm
 }
 
+type AddressRequestModel struct {
+	Address *common.Address `json:"address"`
+}
+
+type WithdrawRequestModel struct {
+	Address     *common.Address `json:"address"`
+	AcutionName string          `json:"auctionName`
+}
+
 type BidderModel struct {
 	AuctionName string          `json:"auctionName"`
 	Name        string          `json:"name"`

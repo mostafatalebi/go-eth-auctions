@@ -105,6 +105,26 @@ func ValidateIncomingAuctionAuthorizeBidderReq(b []byte) (*core.BidderModel, err
 	return model, nil
 }
 
+func ValidateIncomingAddressReq(b []byte) (*core.AddressRequestModel, error) {
+	var model *core.AddressRequestModel
+	var err = json.Unmarshal(b, &model)
+
+	if err != nil {
+		return nil, err
+	}
+	err = nil
+
+	if model.Address == nil || utils.ValidateAddress(*model.Address) == false {
+		err = errors.New("validation error: address is not properly formatted")
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return model, nil
+}
+
 func RespondWithError(msg string) []byte {
 	var e = &ErrorResp{
 		Error: msg,
@@ -142,6 +162,18 @@ func ValidateIncomingBidReq(b []byte) (*core.Bid, error) {
 	if model.ProductCode == 0 {
 		err = errors.New("validation error: product cannot be zero")
 	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return model, nil
+}
+
+func ValidateWithdrawReq(b []byte) (*core.WithdrawRequestModel, error) {
+	var model *core.WithdrawRequestModel
+
+	var err = json.Unmarshal(b, &model)
 
 	if err != nil {
 		return nil, err

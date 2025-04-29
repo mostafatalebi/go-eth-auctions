@@ -16,6 +16,8 @@ const (
 	RouteAuctionBidderAuthorize = "/auction/bidder/authorize"
 	RouteAuctionBid             = "/auction/bid"
 	RouteAuctionLogs            = "/auction/logs"
+	RouteAuccountWithdraw       = "/account/withdraw"
+	RouteAccountBalance         = "/account/balance"
 	RouteBlockchainView         = "/blockchain/view"
 )
 

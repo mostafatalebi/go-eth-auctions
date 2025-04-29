@@ -22,6 +22,7 @@ type RepoInterface interface {
 	AddProduct(auctionName string, p *ProductModel) error
 	AuthorizeBidder(auctionName string, b *BidderModel) error
 	Bid(auctionName string, p *Bid) error
+	Withdraw(auctionName string, bidder *common.Address) error
 	BlockchainView(auctionName string) ([]byte, error)
 	Backup() ([]byte, error)
 	Restore(b []byte) error
@@ -41,6 +42,7 @@ const (
 	JobBidAuthorize    string = "bidAuthorize"
 	JobAddProduct      string = "addProduct"
 	JobBid             string = "bid"
+	JobWithdraw        string = "withdraw"
 )
 
 type Job struct {
@@ -68,10 +70,13 @@ func NewRepository(blockchain *BlockChain) *Repository {
 				v.params["product"].(*ProductModel), v.rollbackFn)
 		} else if v.name == JobBid {
 			r.callBid(v.params["auctionName"].(string),
-				v.params["pCode"].(uint), v.params["bid"].(*big.Int), v.rollbackFn)
+				v.params["pCode"].(uint), v.params["bid"].(*big.Int), nil)
 		} else if v.name == JobSetAuctionTimes {
 			r.callSetTimings(v.params["auctionName"].(string),
 				v.params["startDate"].(*big.Int), v.params["endDate"].(*big.Int), v.rollbackFn)
+		} else if v.name == JobWithdraw {
+			r.callWithdraw(v.params["auctionName"].(string),
+				v.params["bidder"].(*common.Address))
 		}
 	})
 
@@ -288,26 +293,26 @@ func (ad *Repository) AuthorizeBidder(auctionName string, b *BidderModel) error 
 	return errors.New("auction not found")
 }
 
-func (ad *Repository) callBid(auctionName string, pCode uint, bidAmount *big.Int, rollbackFn func()) error {
+// this function calls BidAs(bidder) of the contract, placing the bid on behalf of
+// the bidder.
+func (ad *Repository) callBid(auctionName string, pCode uint, bidAmount *big.Int,
+	bidder *common.Address) error {
 
 	chainid, err := ad.blockchain.Backend.ChainID(context.Background())
 	if err != nil {
 		return err
 	}
-	tx, err := ad.blockchain.AuctionContract(auctionName).Bid(&bind.TransactOpts{
+
+	tx, err := ad.blockchain.AuctionContract(auctionName).BidAs(&bind.TransactOpts{
 		From: *ad.blockchain.owners[auctionName],
 		Signer: func(a common.Address, t *types.Transaction) (*types.Transaction, error) {
 			return types.SignTx(t, types.NewLondonSigner(chainid), ad.blockchain.keys[auctionName])
 		},
 		Value: bidAmount,
-	}, big.NewInt(int64(pCode)))
+	}, big.NewInt(int64(pCode)), *bidder)
 	if err != nil {
 		logger.Get().Append(auctionName, JobBidAuthorize,
 			fmt.Sprintf("contract call failed: %s", err.Error()))
-
-		if rollbackFn != nil {
-			rollbackFn()
-		}
 		return err
 	}
 
@@ -330,7 +335,7 @@ func (ad *Repository) Bid(auctionName string, bid *Bid) error {
 
 			ad.workers.Enqueue(&Job{name: JobBid,
 				params: map[string]any{"auctionName": auctionName, "pCode": bid.ProductCode,
-					"bid": bid.Amount},
+					"bid": bid.Amount, "bidder": bid.Address},
 				rollbackFn: func() {
 					ad.lock.Lock()
 					defer ad.lock.Unlock()
@@ -349,6 +354,47 @@ func (ad *Repository) Bid(auctionName string, bid *Bid) error {
 		}
 	}
 	return errors.New("auction not found")
+}
+
+// Since this is a backend server, we do not have bidder's private credentials
+// to sign the message. Hence, we need to do it on his behalf, which means calling
+// withdrawAs() method of the contract
+func (ad *Repository) callWithdraw(auctionName string, bidder *common.Address) error {
+
+	chainid, err := ad.blockchain.Backend.ChainID(context.Background())
+	if err != nil {
+		return err
+	}
+	tx, err := ad.blockchain.AuctionContract(auctionName).WithdrawAs(&bind.TransactOpts{
+		From: *ad.blockchain.owners[auctionName],
+		Signer: func(a common.Address, t *types.Transaction) (*types.Transaction, error) {
+			return types.SignTx(t, types.NewLondonSigner(chainid), ad.blockchain.keys[auctionName])
+		},
+	}, *bidder)
+	if err != nil {
+		logger.Get().Append(auctionName, JobWithdraw,
+			fmt.Sprintf("contract call failed: %s", err.Error()))
+		return err
+	}
+
+	logger.Get().Append(auctionName, JobWithdraw, "contract call successful")
+
+	fmt.Println("withdrawAs() called on smart contract, successfully: " + tx.ChainId().String())
+
+	return nil
+}
+
+func (ad *Repository) Withdraw(auctionName string, bidder *common.Address) error {
+	ad.lock.RLock()
+	defer ad.lock.RUnlock()
+
+	ad.workers.Enqueue(&Job{
+		name:       JobWithdraw,
+		params:     map[string]any{"bidder": bidder, "auctionName": auctionName},
+		rollbackFn: nil,
+	})
+
+	return nil
 }
 
 func (ad *Repository) Backup() ([]byte, error) {

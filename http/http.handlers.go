@@ -134,6 +134,41 @@ func (hh *HttpHandlers) AuctionAuthorizeBidder(ctx *fasthttp.RequestCtx) {
 	ctx.Response.SetBody(data)
 }
 
+func (hh *HttpHandlers) AccountWithdraw(ctx *fasthttp.RequestCtx) {
+	var body = ctx.Request.Body()
+
+	var model, err = ValidateWithdrawReq(body)
+	ctx.Response.Header.Set("Content-Type", "application/json")
+	if err != nil {
+		ctx.Response.SetStatusCode(400)
+		ctx.Response.SetBody(RespondWithError(err.Error()))
+		return
+	}
+
+	err = hh.core.Repo.Withdraw(model.AcutionName, model.Address)
+
+	if err != nil {
+		if strings.Contains(err.Error(), "not found") {
+			ctx.Response.SetStatusCode(404)
+			return
+		}
+		ctx.Response.SetStatusCode(500)
+		ctx.Response.SetBody(RespondWithError(err.Error()))
+		return
+	}
+
+	data, err := RespondWithData(model)
+
+	if err != nil {
+		ctx.Response.SetStatusCode(500)
+		ctx.Response.SetBody(RespondWithError(err.Error()))
+		return
+	}
+
+	ctx.Response.SetStatusCode(200)
+	ctx.Response.SetBody(data)
+}
+
 func (hh *HttpHandlers) AuctionLogs(ctx *fasthttp.RequestCtx) {
 	var auctionName = string(ctx.QueryArgs().Peek("auctionName"))
 	ctx.Response.Header.Set("Content-Type", "application/json")
